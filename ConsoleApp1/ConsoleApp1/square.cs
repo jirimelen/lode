@@ -8,9 +8,9 @@ namespace ConsoleApp1
 {
     class Square
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Occupated { get; set; } = 0;
+        public List<int> pos { get; set; }
+        public int Occupied { get; set; } = 0;
         public int Destroyed { get; set; } = 0;
+		public Boat occupiedBy;
     }
 }
