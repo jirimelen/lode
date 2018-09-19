@@ -11,6 +11,7 @@ namespace ConsoleApp1
         public List<int> pos { get; set; }
         public int Occupied { get; set; } = 0;
         public int Destroyed { get; set; } = 0;
-		public Boat occupiedBy;
+		public Boat occupiedBy { get; set; }
+        public int overlay { get; set; } = 0;
     }
 }

@@ -41,7 +41,7 @@ namespace ConsoleApp1
 			{
 				if (board[p-1].Occupied == 1)
 				{
-					Console.BackgroundColor = ConsoleColor.DarkRed;
+					Console.BackgroundColor = ConsoleColor.DarkGreen;
 				}
 
 				Console.Write("_|");

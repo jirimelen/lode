@@ -18,6 +18,9 @@ namespace ConsoleApp1
 
 			List<Square> newList = boat.markBoat(board);
 
+
+			Console.WriteLine("use arrows to move and 'R' to rotate :)");
+
 			board.updateBoard(newList);
 			board.printBoard();
 
@@ -27,7 +30,8 @@ namespace ConsoleApp1
 
 				Console.Clear();
 
-				Console.WriteLine(cki.Key.ToString());
+				//Console.WriteLine(cki.Key.ToString());
+				Console.WriteLine("use arrows to move and 'R' to rotate :)");
 
 				switch (cki.Key.ToString())
 				{
