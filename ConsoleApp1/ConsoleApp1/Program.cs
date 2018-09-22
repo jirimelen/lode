@@ -14,7 +14,7 @@ namespace ConsoleApp1
 
             Board board = new Board();
 
-            Boat boat = new Boat();
+            Boat boat = new Catamaran_boat(4);
 
 			List<Square> newList = boat.markBoat(board);
 
@@ -30,7 +30,7 @@ namespace ConsoleApp1
 
 				Console.Clear();
 
-				//Console.WriteLine(cki.Key.ToString());
+				Console.WriteLine(cki.Key.ToString());
 				Console.WriteLine("use arrows to move and 'R' to rotate :)");
 
 				switch (cki.Key.ToString())
@@ -47,10 +47,13 @@ namespace ConsoleApp1
 					case "UpArrow":
 						boat.moveBoat(board, 3);
 						break;
-					case "R":
-						boat.rotateBoat(board);
-						break;
-				}
+                    case "R":
+                        boat.rotateBoat(board);
+                        break;
+                    case "Enter":
+                        boat.placeBoat(board);
+                        break;
+                }
 				board.printBoard();
 				Console.WriteLine();
 			} while (cki.Key != ConsoleKey.Escape);

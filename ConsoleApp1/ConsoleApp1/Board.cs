@@ -11,6 +11,7 @@ namespace ConsoleApp1
 		public int Ver = 10;
 		public int Hor = 10;
         private List<Square> board = new List<Square>();
+        private List<Boat> boats = new List<Boat>();
 
         public Board()
         {
@@ -20,7 +21,7 @@ namespace ConsoleApp1
                 {
 					board.Add(new Square
 					{
-						pos = new List<int>() {i,u}
+						Pos = new List<int>() {i,u}
 					});
                 }
             }
@@ -39,20 +40,28 @@ namespace ConsoleApp1
 			Console.Write("\n");
 			for (int p = 1; p < Ver*Hor+1; p++)
 			{
-				if (board[p-1].Occupied == 1)
+				if (board[p-1].state == 1)
 				{
-					Console.BackgroundColor = ConsoleColor.DarkGreen;
+					Console.BackgroundColor = ConsoleColor.White;
 				}
+                if (board[p-1].Overlay == 1)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                }
+                if (board[p - 1].state == 1 && board[p - 1].Overlay == 1)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                }
 
-				Console.Write("_|");
+                Console.Write("_|");
 				Console.ResetColor();
 				Console.Write("  ");
 
-				if (p % Ver == 0)
+				if (p % Hor == 0)
 				{
 					Console.Write("\n\n");
 				}
 			}
-		}
+		}        
     }
 }
