@@ -10,6 +10,7 @@ namespace ConsoleApp1
     {
         free,
         occupied,
-        destroyed
+        waterHit,
+        boatHit
     }
 }

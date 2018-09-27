@@ -11,7 +11,8 @@ namespace ConsoleApp1
 		public int Ver = 10;
 		public int Hor = 10;
         private List<Square> board = new List<Square>();
-        private List<Boat> boats = new List<Boat>();
+        private int type = 0;
+        public List<Boat> Boats = new List<Boat>();
 
         public Board()
         {
@@ -38,19 +39,37 @@ namespace ConsoleApp1
 
 		public void printBoard() {
 			Console.Write("\n");
-			for (int p = 1; p < Ver*Hor+1; p++)
+            for (int p = 1; p < Ver*Hor+1; p++)
 			{
-				if (board[p-1].state == 1)
-				{
-					Console.BackgroundColor = ConsoleColor.White;
-				}
-                if (board[p-1].Overlay == 1)
+                if (type == 0)
                 {
-                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    if (board[p - 1].state == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    if (board[p - 1].Overlay == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    }
+                    if (board[p - 1].state == 1 && board[p - 1].Overlay == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                    }
                 }
-                if (board[p - 1].state == 1 && board[p - 1].Overlay == 1)
+                else
                 {
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    if (board[p - 1].state == (int)Square_state.waterHit)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    }
+                    if (board[p - 1].state == (int)Square_state.boatHit)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                    }
+                    if (board[p - 1].Overlay == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    }
                 }
 
                 Console.Write("_|");
@@ -62,6 +81,20 @@ namespace ConsoleApp1
 					Console.Write("\n\n");
 				}
 			}
-		}        
+		}
+
+        public bool checkWin()
+        {
+            for (int p = 1; p < Ver * Hor + 1; p++)
+            {
+                if (board[p - 1].state == (int)Square_state.occupied) return false;
+            }
+            return true;
+        }
+        
+        public void nextPhase()
+        {
+            type++;
+        }
     }
 }

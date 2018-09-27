@@ -13,8 +13,8 @@ namespace ConsoleApp1
 		private List<Square> immune = new List<Square>();
 		private int rotated = 0;
 
-		private int width = 4;
-		private int height = 2;
+		protected int width;
+		protected int height = 2;
 
 		public Boat()
 		{
@@ -22,7 +22,7 @@ namespace ConsoleApp1
 			//if space between(even on first and last square in layer) squares in layer then counter += numOfSpaces 
 		}
 		
-        public List<Square> markBoat(Board gameBoard)
+        public List<Square> markBoat(Board gameBoard, int state = 0)
         {
             List<Square> boardSquares = gameBoard.getBoard();
 
@@ -33,22 +33,14 @@ namespace ConsoleApp1
 				{
                     if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
                     {
-                        /*Console.Write("hor: " + gameBoard.Hor);
-                        Console.Write(" ver: " + gameBoard.Ver);
-                        Console.Write(" index: " + indexCounter);
-                        Console.Write("\n");
-                        if ((indexCounter + 1) % gameBoard.Hor != 0 && (indexCounter) % (gameBoard.Hor) != 0 && indexCounter > gameBoard.Hor && indexCounter < gameBoard.Hor * (gameBoard.Ver - 1))
+                        if (state == 0)
                         {
-                            List<Square> layer = gameBoard.getSquareLayer(indexCounter);
-                            foreach (var item in layer)
-                            {
-                                Console.Write("   " + item.Pos[0] + ", " + item.Pos[1] + " // " + item.state + "\n");
-                            }
+                            boardSquare.Overlay = 1;
                         }
-                        //List<Square> layer = gameBoard.getSquareLayer(indexCounter);
-                        Console.Write("\n");*/
-
-                        boardSquare.Overlay = 1;
+                        else
+                        {
+                            boardSquare.Overlay = 0;
+                        }
                         immune.Add(boardSquare);
                     }
                     else
@@ -67,7 +59,12 @@ namespace ConsoleApp1
 			return boardSquares;
         }
 
-        public List<Square> placeBoat(Board gameBoard) {
+        public int getWidth()
+        {
+            return width;
+        }
+
+        public bool placeBoat(Board gameBoard) {
             List<Square> boardSquares = gameBoard.getBoard();
             int err = 0;
 
@@ -90,21 +87,19 @@ namespace ConsoleApp1
                     {
                         if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
                         {
-                            if (err == 0)
-                            {
-                                boardSquare.state = 1;
-                                boardSquare.OccupiedBy = this;
-                            }
+                            boardSquare.state = 1;
+                            boardSquare.OccupiedBy = this;
                         }
                     }
                 }
+                return true;
             }
             else
             {
                 Console.WriteLine("An error occured while placing the boat.");
+                return false;
             }
 
-            return boardSquares;
         }
 
 		public void checkCollision(Board gameBoard, Square square) {
@@ -188,100 +183,91 @@ namespace ConsoleApp1
 
 			foreach (var square in squares)
             {
-
+                //not complete... brakes after full rotation
+                layer = square.BoatPos[0];
+                counter = square.BoatPos[1];
+                counterX = -layer + counter;
+                counterY = -layer + counter;
 
                 /*Console.WriteLine("counterX: " + counterX);
                 Console.WriteLine("counterY: " + counterY);
                 Console.WriteLine("counter: " + counter);
-                Console.WriteLine("pos X: " + square.Pos[1]);
                 Console.WriteLine("layer: " + layer);
-                Console.WriteLine("pos Y: " + square.Pos[0]);
-                Console.WriteLine("+");*/
-                if (counterX != square.BoatIndex)
-                {
-                    counter = square.BoatIndex;
-                    counterX = counter - layer;
-                    if (counter == 0)
-                    {
-                        counter = 0;
-                        layer++;
-                        counterX = -layer;
-                        counterY = -layer;
-                    }
-                }
-
-                Console.WriteLine("counterX: " + counterX);
-                Console.WriteLine("counterY: " + counterY);
-                Console.WriteLine("counter: " + counter);
                 Console.WriteLine("pos X: " + square.Pos[1]);
-                Console.WriteLine("layer: " + layer);
                 Console.WriteLine("pos Y: " + square.Pos[0]);
-                Console.WriteLine("after:");
+                Console.WriteLine("after:");*/
                 switch (rotated)
 				{
 					case 0:
                         square.Pos[0] += counterY;
 						square.Pos[1] -= counterX;
-                        Console.WriteLine("pos X: " + square.Pos[1]);
-                        Console.WriteLine("pos Y: " + square.Pos[0]);
-                        Console.WriteLine("after:");
                         break;
-                        /*case 1:
-                            square.Pos[0] -= counter;
-                            square.Pos[1] -= counter;
-                            if (layer == 2) square.Pos[1] += 1;
-                            if (layer == 2) square.Pos[0] -= 1;
-                            break;
-                        case 2:
-                            square.Pos[0] -= counter;
-                            square.Pos[1] += counter;
-                            if (layer == 2) square.Pos[0] += 1;
-                            if (layer == 2) square.Pos[1] += 1;
-                            break;
-                        case 3:
-                            square.Pos[0] += counter;
-                            square.Pos[1] += counter;
-                            if (layer == 2) square.Pos[1] -= 1;
-                            if (layer == 2) square.Pos[0] += 1;
-                            break;*/
+                    case 1:
+                        //if (layer != 0 && counter == 0) counterX *= 2;
+                        square.Pos[0] -= counterY;
+                        square.Pos[1] -= counterX;
+                        break;
+                    case 2:
+                        square.Pos[0] -= counterY;
+                        square.Pos[1] += counterX;
+                        break;
+                    case 3:
+                        square.Pos[0] += counterY;
+                        square.Pos[1] += counterX;
+                        break;
                 }
-                Console.WriteLine("pos X: " + square.Pos[1]);
+                checkCollision(gameBoard, square);
+                /*Console.WriteLine("pos X: " + square.Pos[1]);
                 Console.WriteLine("pos Y: " + square.Pos[0]);
-                Console.WriteLine();
-
-                if (counter < 3)
-                {
-                    counter++;
-                    counterX--;
-                    counterY++;
-                }
-                else
-                {
-                    counter = 0;
-                    layer++;
-                    counterX = -layer;
-                    counterY = -layer;
-                }
+                Console.WriteLine();*/
 			}
-
 			rotated++;
 			if (rotated >= 4) rotated = 0;
+            //Console.WriteLine(rotated);
 			
 			return markBoat(gameBoard);
-		}
-	}
+        }
+
+        public int attack(Board gameBoard)
+        {
+            List<Square> boardSquares = gameBoard.getBoard();
+            Square square = squares[0];
+            foreach (var boardSquare in boardSquares)
+            {
+                if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
+                {
+                    if (boardSquare.state == (int)Square_state.occupied)
+                    {
+                        boardSquare.state = (int)Square_state.boatHit;
+                        return 1;
+                    }
+                    else if (boardSquare.state == (int)Square_state.free)
+                    {
+                        boardSquare.state = (int)Square_state.waterHit;
+                        return 0;
+                    }
+                    else if (boardSquare.state == (int)Square_state.waterHit || boardSquare.state == (int)Square_state.boatHit)
+                    {
+                        return 2;
+                    }
+                }
+            }
+            return 2;
+        }
+    }
 
 
     class Simple_boat : Boat
     {
-        public Simple_boat(int length)
+        public Simple_boat(int length/*, List<int> startValues <- when changing boat construct the new one on the same place as current*/)
         {
+            width = length;
             for (int i = 0; i < length; i++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 0, i },
-                    BoatIndex = i,//BoatIndex => BoatPos[1] ...
+                    BoatPos = new List<int>() { 0, i },
                 });
             }
         }
@@ -291,12 +277,13 @@ namespace ConsoleApp1
     {
         public Base_boat(int length)
         {
+            width = 3;
             for (int i = 0; i < 3; i++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 0, i },
-                    BoatIndex = i,
+                    BoatPos = new List<int>() { 0,i },
                 });
             }
             for (int u = 0; u < 3; u++)
@@ -304,7 +291,7 @@ namespace ConsoleApp1
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 1, u },
-                    BoatIndex = u,
+                    BoatPos = new List<int>() { 1,u },
                 });
             }
         }
@@ -314,20 +301,21 @@ namespace ConsoleApp1
     {
         public Hydroplane_boat(int length)
         {
+            width = 3;
             squares.Add(new Square
             {
                 Pos = new List<int>() { 0, 1 },
-                BoatIndex = 1,
+                BoatPos = new List<int>() { 0, 1 },
             });
             squares.Add(new Square
             {
                 Pos = new List<int>() { 1, 0 },
-                BoatIndex = 0,
+                BoatPos = new List<int>() { 1,0 }
             });
             squares.Add(new Square
             {
                 Pos = new List<int>() { 1, 2 },
-                BoatIndex = 2,
+                BoatPos = new List<int>() { 1,2 }
             });
         }
     }
@@ -336,18 +324,19 @@ namespace ConsoleApp1
     {
         public Cruiser_boat(int length)
         {
+            width = 3;
             for (int i = 0; i < 3; i++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 0, i },
-                    BoatIndex = i,
+                    BoatPos = new List<int>() { 0,i }
                 });
             }
             squares.Add(new Square
             {
-                Pos = new List<int>() { 0, 1 },
-                BoatIndex = 1,
+                Pos = new List<int>() { 1, 1 },
+                BoatPos = new List<int>() { 1,1 }
             });
         }
     }
@@ -356,23 +345,24 @@ namespace ConsoleApp1
     {
         public HeavyCruiser_boat(int length)
         {
+            width = 3;
             squares.Add(new Square
             {
                 Pos = new List<int>() { 0, 1 },
-                BoatIndex = 1,
+                BoatPos = new List<int>() { 0,1 }
             });
             for (int u = 0; u < 3; u++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 1, u },
-                    BoatIndex = u,
+                    BoatPos = new List<int>() { 1,u }
                 });
             }
             squares.Add(new Square
             {
                 Pos = new List<int>() { 2, 1 },
-                BoatIndex = 1,
+                BoatPos = new List<int>() { 2,1 }
             });
         }
     }
@@ -381,25 +371,26 @@ namespace ConsoleApp1
     {
         public Catamaran_boat(int length)
         {
+            width = 3;
             for (int u = 0; u < 3; u++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 0, u },
-                    BoatIndex = u,
+                    BoatPos = new List<int>() { 0,u }
                 });
             }
             squares.Add(new Square
             {
                 Pos = new List<int>() { 1, 1 },
-                BoatIndex = 1,
+                BoatPos = new List<int>() { 1,1 }
             });
             for (int i = 0; i < 3; i++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 2, i },
-                    BoatIndex = i,
+                    BoatPos = new List<int>() { 2,i }
                 });
             }
         }
@@ -409,18 +400,19 @@ namespace ConsoleApp1
     {
         public Warship_boat(int length)
         {
+            width = 2;
             for (int i = 0; i < 2; i++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 0, i },
-                    BoatIndex = i,
+                    BoatPos = new List<int>() { 0,i }
                 });
             }
             squares.Add(new Square
             {
                 Pos = new List<int>() { 1, 0 },
-                BoatIndex = 0,
+                BoatPos = new List<int>() { 1,0 }
             });
         }
     }
@@ -429,12 +421,13 @@ namespace ConsoleApp1
     {
         public Planeship_boat(int length)
         {
+            width = 4;
             for (int i = 0; i < 4; i++)
             {
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 0, i },
-                    BoatIndex = i,
+                    BoatPos = new List<int>() { 0,i }
                 });
             }
             for (int u = 0; u < 2; u++)
@@ -442,7 +435,7 @@ namespace ConsoleApp1
                 squares.Add(new Square
                 {
                     Pos = new List<int>() { 1, u },
-                    BoatIndex = u,
+                    BoatPos = new List<int>() { 1,u }
                 });
             }
         }
