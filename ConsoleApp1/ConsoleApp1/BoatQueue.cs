@@ -28,7 +28,7 @@ namespace ConsoleApp1
         public Board getQueueBoard()
         {
             Board queueBoard = new Board(3,5);
-            queueBoard.updateBoard(queue[position].markBoat(queueBoard));
+            //queueBoard.updateBoard(queue[position].markBoat(queueBoard));
 
             return queueBoard;
         }
@@ -45,7 +45,7 @@ namespace ConsoleApp1
 
         public Boat getNextBoat()
         {
-            return queue[position];
+            return position <= queue.Count() ? queue[position] : queue[position - 1];
         }
     }
 }
