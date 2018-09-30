@@ -17,10 +17,13 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(41, 40);
-            Console.SetBufferSize(41, 40);
+            //Console.SetWindowSize(41, 40);
+            //Console.SetBufferSize(41, 40);
+
+            GameManager manager = new GameManager();
 
             ConsoleKeyInfo cki;
+            //keyboard keys in List and passing their indexes into switch methods
 
             bool activeLoop = true;
             bool completed = false;
@@ -33,11 +36,8 @@ namespace ConsoleApp1
 
 			List<Square> newList = boat.markBoat(board1);
 
-
-            Console.WriteLine("Use arrows to move and 'R' to rotate :)");
-            Console.WriteLine("Use nums 0-7 to change type of boat.");
-            Console.WriteLine("while option 0 is selected use +/- to make your boat longer/shorter.");
-            Console.WriteLine("Player 1 places boats:");
+            
+            manager.printInfo(1,1);
 
             board1.updateBoard(newList);
 			board1.printBoard();
@@ -48,30 +48,26 @@ namespace ConsoleApp1
                 cki = Console.ReadKey();
 
                 Console.Clear();
-                
-                Console.WriteLine("use arrows to move and 'R' to rotate :)");
-                Console.WriteLine("Use nums 0-7 to change type of boat.");
-                Console.WriteLine("while option 0 is selected use +/- to make your boat longer/shorter.");
-                Console.WriteLine("Player 1 places boats:");
+                manager.printInfo(1, 1);
 
-                switch (cki.Key.ToString())
+                switch (cki.Key)
                 {
-                    case "RightArrow":
+                    case ConsoleKey.RightArrow:
                         boat.moveBoat(board1, 0);
                         break;
-                    case "DownArrow":
+                    case ConsoleKey.DownArrow:
                         boat.moveBoat(board1, 1);
                         break;
-                    case "LeftArrow":
+                    case ConsoleKey.LeftArrow:
                         boat.moveBoat(board1, 2);
                         break;
-                    case "UpArrow":
+                    case ConsoleKey.UpArrow:
                         boat.moveBoat(board1, 3);
                         break;
-                    case "R":
+                    case ConsoleKey.R:
                         boat.rotateBoat(board1);
                         break;
-                    case "Enter":
+                    case ConsoleKey.Enter:
                         bool placed = boat.placeBoat(board1);
                         if (placed == true)
                         {
@@ -81,8 +77,8 @@ namespace ConsoleApp1
                         }
                         break;
 
-                    case "Add":
-                    case "OemPlus":
+                    case ConsoleKey.Add:
+                    case ConsoleKey.OemPlus:
                         if (boat.GetType().Name == "Simple_boat")
                         {
                             if (boat.getWidth() + 1 <= 5)
@@ -92,8 +88,8 @@ namespace ConsoleApp1
                             }
                         }
                         break;
-                    case "Subtract":
-                    case "OemMinus":
+                    case ConsoleKey.Subtract:
+                    case ConsoleKey.OemMinus:
                         if (boat.GetType().Name.Equals("Simple_boat"))
                         {
                             if (boat.getWidth() - 1 > 0)
@@ -104,40 +100,40 @@ namespace ConsoleApp1
                         }
                         break;
 
-                    case "D0":
+                    case ConsoleKey.D0:
                         boat = new Simple_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D1":
+                    case ConsoleKey.D1:
                         boat = new Base_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D2":
+                    case ConsoleKey.D2:
                         boat = new Hydroplane_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D3":
+                    case ConsoleKey.D3:
                         boat = new Cruiser_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D4":
+                    case ConsoleKey.D4:
                         boat = new HeavyCruiser_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D5":
+                    case ConsoleKey.D5:
                         boat = new Catamaran_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D6":
+                    case ConsoleKey.D6:
                         boat = new Warship_boat(1);
                         boat.markBoat(board1);
                         break;
-                    case "D7":
+                    case ConsoleKey.D7:
                         boat = new Planeship_boat(1);
                         boat.markBoat(board1);
                         break;
 
-                    case "Tab":
+                    case ConsoleKey.Tab:
                         board1.nextPhase();
                         activeLoop = false;
                         break;
@@ -152,11 +148,8 @@ namespace ConsoleApp1
             newList = boat.markBoat(board2);
 
             Console.Clear();
+            manager.printInfo(2, 1);
 
-            Console.WriteLine("use arrows to move and 'R' to rotate :)");
-            Console.WriteLine("Use nums 0-7 to change type of boat.");
-            Console.WriteLine("while option 0 is selected use +/- to make your boat longer/shorter.");
-            Console.WriteLine("Player 2 places boats:");
             board2.updateBoard(newList);
             board2.printBoard();
 
@@ -166,30 +159,26 @@ namespace ConsoleApp1
                 cki = Console.ReadKey();
 
                 Console.Clear();
-                
-                Console.WriteLine("use arrows to move and 'R' to rotate :)");
-                Console.WriteLine("Use nums 0-7 to change type of boat.");
-                Console.WriteLine("while option 0 is selected use +/- to make your boat longer/shorter.");
-                Console.WriteLine("Player 2 places boats:");
+                manager.printInfo(2, 1);
 
-                switch (cki.Key.ToString())
+                switch (cki.Key)
                 {
-                    case "RightArrow":
+                    case ConsoleKey.RightArrow:
                         boat.moveBoat(board2, 0);
                         break;
-                    case "DownArrow":
+                    case ConsoleKey.DownArrow:
                         boat.moveBoat(board2, 1);
                         break;
-                    case "LeftArrow":
+                    case ConsoleKey.LeftArrow:
                         boat.moveBoat(board2, 2);
                         break;
-                    case "UpArrow":
+                    case ConsoleKey.UpArrow:
                         boat.moveBoat(board2, 3);
                         break;
-                    case "R":
+                    case ConsoleKey.R:
                         boat.rotateBoat(board2);
                         break;
-                    case "Enter":
+                    case ConsoleKey.Enter:
                         bool placed = boat.placeBoat(board2);
                         if (placed == true)
                         {
@@ -199,8 +188,8 @@ namespace ConsoleApp1
                         }
                         break;
 
-                    case "Add":
-                    case "OemPlus":
+                    case ConsoleKey.Add:
+                    case ConsoleKey.OemPlus:
                         if (boat.GetType().Name == "Simple_boat")
                         {
                             if (boat.getWidth() + 1 <= 5)
@@ -210,8 +199,8 @@ namespace ConsoleApp1
                             }
                         }
                         break;
-                    case "Subtract":
-                    case "OemMinus":
+                    case ConsoleKey.Subtract:
+                    case ConsoleKey.OemMinus:
                         if (boat.GetType().Name.Equals("Simple_boat"))
                         {
                             if (boat.getWidth() - 1 > 0)
@@ -222,40 +211,40 @@ namespace ConsoleApp1
                         }
                         break;
 
-                    case "D0":
+                    case ConsoleKey.D0:
                         boat = new Simple_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D1":
+                    case ConsoleKey.D1:
                         boat = new Base_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D2":
+                    case ConsoleKey.D2:
                         boat = new Hydroplane_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D3":
+                    case ConsoleKey.D3:
                         boat = new Cruiser_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D4":
+                    case ConsoleKey.D4:
                         boat = new HeavyCruiser_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D5":
+                    case ConsoleKey.D5:
                         boat = new Catamaran_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D6":
+                    case ConsoleKey.D6:
                         boat = new Warship_boat(1);
                         boat.markBoat(board2);
                         break;
-                    case "D7":
+                    case ConsoleKey.D7:
                         boat = new Planeship_boat(1);
                         boat.markBoat(board2);
                         break;
 
-                    case "Tab":
+                    case ConsoleKey.Tab:
                         board2.nextPhase();
                         activeLoop = false;
                         break;
@@ -273,11 +262,9 @@ namespace ConsoleApp1
                 newList = boat.markBoat(board2);
 
                 Console.Clear();
+                manager.printInfo(1,2);
 
-                Console.WriteLine("use arrows to choose a square which you want to attack");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("Player 1 attacks:");
+
                 board2.updateBoard(newList);
                 board2.printBoard();
 
@@ -287,40 +274,39 @@ namespace ConsoleApp1
                     cki = Console.ReadKey();
 
                     Console.Clear();
-                    
-                    Console.WriteLine("use arrows to choose a square then press 'Enter' when you want to attack");
-                    Console.WriteLine("");
-                    Console.WriteLine("");
-                    Console.WriteLine("Player 1 attacks:");
+                    manager.printInfo(1, 2);
 
-                    switch (cki.Key.ToString())
+                    switch (cki.Key)
                     {
-                        case "RightArrow":
+                        case ConsoleKey.RightArrow:
                             boat.moveBoat(board2, 0);
                             break;
-                        case "DownArrow":
+                        case ConsoleKey.DownArrow:
                             boat.moveBoat(board2, 1);
                             break;
-                        case "LeftArrow":
+                        case ConsoleKey.LeftArrow:
                             boat.moveBoat(board2, 2);
                             break;
-                        case "UpArrow":
+                        case ConsoleKey.UpArrow:
                             boat.moveBoat(board2, 3);
                             break;
 
-                        case "Enter":
+                        case ConsoleKey.Enter:
                             switch (boat.attack(board2))
                             {
                                 case 2:
                                     Console.WriteLine("You've already hit this square. try again");
                                     break;
                                 case 1:
-                                    Console.WriteLine("You've hit part of opponent's boat, you get one more try ");
                                     completed = board2.checkWin();
                                     if (completed) {
                                         winner = 1;
                                         activeLoop = false;
                                     } 
+                                    else
+                                    {
+                                        Console.WriteLine("You've hit part of opponent's boat, you get one more try ");
+                                    }
                                     break;
                                 case 0:
                                     boat.markBoat(board2, 1);
@@ -330,7 +316,7 @@ namespace ConsoleApp1
                             break; 
 
 
-                        case "Tab":
+                        case ConsoleKey.Tab:
                             board2.nextPhase();
                             activeLoop = false;
                             break;
@@ -352,11 +338,9 @@ namespace ConsoleApp1
                 newList = boat.markBoat(board1);
 
                 Console.Clear();
+                manager.printInfo(2, 2);
 
-                Console.WriteLine("use arrows to choose a square which you want to attack");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("Player 2 attacks:");
+
                 board1.updateBoard(newList);
                 board1.printBoard();
                 if (completed == false)
@@ -366,40 +350,39 @@ namespace ConsoleApp1
                         cki = Console.ReadKey();
 
                         Console.Clear();
-                        
-                        Console.WriteLine("use arrows to choose a square which you want to attack");
-                        Console.WriteLine("");
-                        Console.WriteLine("");
-                        Console.WriteLine("Player 2 attacks:");
+                        manager.printInfo(2, 2);
 
-                        switch (cki.Key.ToString())
+                        switch (cki.Key)
                         {
-                            case "RightArrow":
+                            case ConsoleKey.RightArrow:
                                 boat.moveBoat(board1, 0);
                                 break;
-                            case "DownArrow":
+                            case ConsoleKey.DownArrow:
                                 boat.moveBoat(board1, 1);
                                 break;
-                            case "LeftArrow":
+                            case ConsoleKey.LeftArrow:
                                 boat.moveBoat(board1, 2);
                                 break;
-                            case "UpArrow":
+                            case ConsoleKey.UpArrow:
                                 boat.moveBoat(board1, 3);
                                 break;
 
-                            case "Enter":
+                            case ConsoleKey.Enter:
                                 switch (boat.attack(board1))
                                 {
                                     case 2:
                                         Console.WriteLine("You've already hit this square. try again");
                                         break;
                                     case 1:
-                                        Console.WriteLine("You've hit part of opponent's boat, you get one more try ");
                                         completed = board1.checkWin();
                                         if (completed)
                                         {
                                             winner = 2;
                                             activeLoop = false;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("You've hit part of opponent's boat, you get one more try ");
                                         }
                                         break;
                                     case 0:
@@ -410,7 +393,7 @@ namespace ConsoleApp1
                                 break;
 
 
-                            case "Tab":
+                            case ConsoleKey.Tab:
                                 board1.nextPhase();
                                 activeLoop = false;
                                 break;

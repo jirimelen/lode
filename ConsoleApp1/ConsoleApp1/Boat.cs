@@ -103,8 +103,8 @@ namespace ConsoleApp1
         }
 
 		public void checkCollision(Board gameBoard, Square square) {
-			int ver = gameBoard.Ver;
-			int hor = gameBoard.Hor;
+			int ver = gameBoard.ver;
+			int hor = gameBoard.hor;
 			int? direction = null;
 
 			if (square.Pos[0] < 0)

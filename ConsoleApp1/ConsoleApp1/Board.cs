@@ -8,17 +8,20 @@ namespace ConsoleApp1
 {
     class Board
     {
-		public int Ver = 10;
-		public int Hor = 10;
+		public int ver;
+		public int hor;
         private List<Square> board = new List<Square>();
         private int type = 0;
         public List<Boat> Boats = new List<Boat>();
 
-        public Board()
+        public Board(int vertical = 10, int horizontal = 10)
         {
-            for (int i = 0; i < Ver; i++)
+            ver = vertical;
+            hor = horizontal;
+
+            for (int i = 0; i < ver; i++)
             {
-                for (int u = 0; u < Hor; u++)
+                for (int u = 0; u < hor; u++)
                 {
 					board.Add(new Square
 					{
@@ -39,7 +42,7 @@ namespace ConsoleApp1
 
 		public void printBoard() {
 			Console.Write("\n");
-            for (int p = 1; p < Ver*Hor+1; p++)
+            for (int p = 1; p <= ver*hor; p++)
 			{
                 if (type == 0)
                 {
@@ -76,16 +79,21 @@ namespace ConsoleApp1
 				Console.ResetColor();
 				Console.Write("  ");
 
-				if (p % Hor == 0)
+				if (p % hor == 0)
 				{
 					Console.Write("\n\n");
 				}
 			}
 		}
 
+        public void printAttackBoard(Board ownBoard)
+        {
+
+        }
+
         public bool checkWin()
         {
-            for (int p = 1; p < Ver * Hor + 1; p++)
+            for (int p = 1; p < ver * hor + 1; p++)
             {
                 if (board[p - 1].state == (int)Square_state.occupied) return false;
             }
