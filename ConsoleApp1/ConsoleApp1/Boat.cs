@@ -12,14 +12,7 @@ namespace ConsoleApp1
 		private List<Square> boardSquares = new List<Square>();
 		private List<Square> immune = new List<Square>();
 		private int rotated = 0;
-
 		protected int width;
-		protected int height = 3;
-
-		public Boat()
-		{
-			//if space between(even on first and last square in layer) squares in layer then counter += numOfSpaces 
-		}
 		
         public List<Square> markBoat(Board gameBoard, int state = 0)
         {
@@ -73,23 +66,23 @@ namespace ConsoleApp1
                 {
                     if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
                     {
-                        if (boardSquare.state == 1) err++;
+                        if (boardSquare.state == Square_state.occupied) err++;
                     }
                     if (square.Pos[0] - 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] - 1 >= 0)
                     {
-                        if (boardSquare.state == 1) err++;
+                        if (boardSquare.state == Square_state.occupied) err++;
                     }
                     if (square.Pos[0] + 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] + 1 <= gameBoard.getSize()[0])
                     {
-                        if (boardSquare.state == 1) err++;
+                        if (boardSquare.state == Square_state.occupied) err++;
                     }
                     if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] - 1 == boardSquare.Pos[1] && square.Pos[1] - 1 >= 0)
                     {
-                        if (boardSquare.state == 1) err++;
+                        if (boardSquare.state == Square_state.occupied) err++;
                     }
                     if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] + 1 == boardSquare.Pos[1] && square.Pos[1] + 1 <= gameBoard.getSize()[1])
                     {
-                        if (boardSquare.state == 1) err++;
+                        if (boardSquare.state == Square_state.occupied) err++;
                     }
                 }
             }
@@ -102,7 +95,7 @@ namespace ConsoleApp1
                     {
                         if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
                         {
-                            boardSquare.state = 1;
+                            boardSquare.state = Square_state.occupied;
                             boardSquare.OccupiedBy = this;
                         }
                     }
@@ -254,17 +247,17 @@ namespace ConsoleApp1
             {
                 if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
                 {
-                    if (boardSquare.state == (int)Square_state.occupied)
+                    if (boardSquare.state == Square_state.occupied)
                     {
-                        boardSquare.state = (int)Square_state.boatHit;
+                        boardSquare.state = Square_state.boatHit;
                         return 1;
                     }
-                    else if (boardSquare.state == (int)Square_state.free)
+                    else if (boardSquare.state == Square_state.free)
                     {
-                        boardSquare.state = (int)Square_state.waterHit;
+                        boardSquare.state = Square_state.waterHit;
                         return 0;
                     }
-                    else if (boardSquare.state == (int)Square_state.waterHit || boardSquare.state == (int)Square_state.boatHit)
+                    else if (boardSquare.state == Square_state.waterHit || boardSquare.state == Square_state.boatHit)
                     {
                         return 2;
                     }

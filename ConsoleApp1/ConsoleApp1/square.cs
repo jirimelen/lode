@@ -10,7 +10,7 @@ namespace ConsoleApp1
     {
         public List<int> Pos { get; set; }
         public List<int> BoatPos { get; set; }
-        public int state = (int)Square_state.free;
+        public Square_state state = Square_state.free;
 		public Boat OccupiedBy { get; set; }
         public int Overlay { get; set; } = 0;
     }

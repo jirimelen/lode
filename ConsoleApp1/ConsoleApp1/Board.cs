@@ -46,7 +46,7 @@ namespace ConsoleApp1
 			{
                 if (type == 0)
                 {
-                    if (board[p - 1].state == 1)
+                    if (board[p - 1].state == Square_state.occupied)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
                     }
@@ -58,54 +58,25 @@ namespace ConsoleApp1
                         {
                             if ((board[p - 1].Pos[0] - 1 == square.Pos[0] && board[p - 1].Pos[1] == square.Pos[1] && board[p - 1].Pos[0] - 1 >= 0) || (board[p - 1].Pos[0] + 1 == square.Pos[0] && board[p - 1].Pos[1] == square.Pos[1] && board[p - 1].Pos[0] + 1 <= this.getSize()[0]) || (board[p - 1].Pos[0] == square.Pos[0] && board[p - 1].Pos[1] - 1 == square.Pos[1] && board[p - 1].Pos[1] - 1 >= 0) || (board[p - 1].Pos[0] == square.Pos[0] && board[p - 1].Pos[1] + 1 == square.Pos[1] && board[p - 1].Pos[1] + 1 <= this.getSize()[1]))
                             {
-                                if (square.state == (int)Square_state.occupied)
+                                if (square.state == Square_state.occupied)
                                 {
                                     Console.BackgroundColor = ConsoleColor.DarkRed;
                                 }
                             }
                         }
                     }
-                    if (board[p - 1].state == 1 && board[p - 1].Overlay == 1)
+                    if (board[p - 1].state == Square_state.occupied && board[p - 1].Overlay == 1)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                     }
-
-
-
-                    /*foreach (var square in squares)
-                    {
-                        foreach (var boardSquare in boardSquares)
-                        {
-                            if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
-                            {
-                                if (boardSquare.state == 1) err++;
-                            }
-                            if (square.Pos[0] - 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] - 1 >= 0)
-                            {
-                                if (boardSquare.state == 1) err++;
-                            }
-                            if (square.Pos[0] + 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] + 1 <= gameBoard.getSize()[0])
-                            {
-                                if (boardSquare.state == 1) err++;
-                            }
-                            if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] - 1 == boardSquare.Pos[1] && square.Pos[1] - 1 >= 0)
-                            {
-                                if (boardSquare.state == 1) err++;
-                            }
-                            if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] + 1 == boardSquare.Pos[1] && square.Pos[1] + 1 <= gameBoard.getSize()[1])
-                            {
-                                if (boardSquare.state == 1) err++;
-                            }
-                        }
-                    }*/
                 }
                 else
                 {
-                    if (board[p - 1].state == (int)Square_state.waterHit)
+                    if (board[p - 1].state == Square_state.waterHit)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
                     }
-                    if (board[p - 1].state == (int)Square_state.boatHit)
+                    if (board[p - 1].state == Square_state.boatHit)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                     }
@@ -140,7 +111,7 @@ namespace ConsoleApp1
         {
             for (int p = 1; p < ver * hor + 1; p++)
             {
-                if (board[p - 1].state == (int)Square_state.occupied) return false;
+                if (board[p - 1].state == Square_state.occupied) return false;
             }
             return true;
         }

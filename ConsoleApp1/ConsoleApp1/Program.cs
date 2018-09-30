@@ -4,26 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//
-// set limits of placed boats
-// set boat types to be placed
-// in attack phase print another board with opponents moves
-// update to SOLID model
-//
-
 namespace ConsoleApp1
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(53, 40);
-            Console.SetBufferSize(53, 40);
+            Console.SetWindowSize(55, 40);
+            Console.SetBufferSize(55, 40);
 
             GameManager manager = new GameManager();
 
             ConsoleKeyInfo cki;
-            //keyboard keys in List and passing their indexes into switch methods
 
             bool activeLoop = true;
             bool completed = false;
@@ -32,7 +24,7 @@ namespace ConsoleApp1
             Board board1 = new Board( 13,13 );
             Board board2 = new Board( 13,13 );
 
-            Boat boat = new Catamaran_boat(1);
+            Boat boat = new Simple_boat(1);
 
 			List<Square> newList = boat.markBoat(board1);
 
@@ -83,11 +75,12 @@ namespace ConsoleApp1
                             boat.markBoat(board1);
                         }
                         break;
-/*
+
+
                     case ConsoleKey.Tab:
                         board1.nextPhase();
                         activeLoop = false;
-                        break;*/
+                        break;
                 }
                 board1.printBoard();
                 Console.WriteLine();
@@ -145,11 +138,12 @@ namespace ConsoleApp1
                             boat.markBoat(board2);
                         }
                         break;
-                        /*
+
+
                     case ConsoleKey.Tab:
-                        board2.nextPhase();
+                        board1.nextPhase();
                         activeLoop = false;
-                        break;*/
+                        break;
                 }
                 board2.printBoard();
                 Console.WriteLine();
@@ -219,8 +213,9 @@ namespace ConsoleApp1
 
 
                         case ConsoleKey.Tab:
-                            board2.nextPhase();
+                            winner = 1;
                             activeLoop = false;
+                            completed = true;
                             break;
                     }
                     board2.printBoard();
@@ -235,18 +230,18 @@ namespace ConsoleApp1
                 
 
 
-                activeLoop = true;
-                boat = new Simple_boat(1);
-                newList = boat.markBoat(board1);
-
-                Console.Clear();
-                manager.printInfo(2, 2);
-
-
-                board1.updateBoard(newList);
-                board1.printBoard();
                 if (completed == false)
                 {
+                    activeLoop = true;
+                    boat = new Simple_boat(1);
+                    newList = boat.markBoat(board1);
+
+                    Console.Clear();
+                    manager.printInfo(2, 2);
+
+
+                    board1.updateBoard(newList);
+                    board1.printBoard();
                     do
                     {
                         cki = Console.ReadKey();
@@ -292,12 +287,6 @@ namespace ConsoleApp1
                                         activeLoop = false;
                                         break;
                                 }
-                                break;
-
-
-                            case ConsoleKey.Tab:
-                                board1.nextPhase();
-                                activeLoop = false;
                                 break;
                         }
                         board1.printBoard();
