@@ -8,15 +8,30 @@ namespace ConsoleApp1
 {
     class GameManager
     {
+        private BoatQueue queue1 = new BoatQueue();
+        private BoatQueue queue2 = new BoatQueue();
+
         public void printInfo(int player, int phase)
         {
+            BoatQueue queue;
             string info = "";
+            if (player == 1)
+            {
+                queue = queue1;
+            }
+            else
+            {
+                queue = queue2;
+            }
+
+
             if (phase == 1)
             {
                 info += "Use arrows to move and 'R' to rotate :) \n";
-                info += "Use nums 0-7 to change type of boat. \n";
-                info += "When option 0 is selected use +/- to make your boat longer/shorter. \n";
                 info += $"Player {player} places boats: \n";
+
+                Console.WriteLine("next boat:");
+                queue.getQueueBoard().printBoard();
             }
             else
             {
@@ -25,6 +40,37 @@ namespace ConsoleApp1
             }
             
             Console.Write(info);
+        }
+
+        public Boat nextBoat(int player)
+        {
+            BoatQueue queue;
+            if (player == 1)
+            {
+                queue = queue1;
+            }
+            else
+            {
+                queue = queue2;
+            }
+
+            queue.moveQueue();
+            return queue.getCurrentBoat();
+        }
+
+        public int checkEndQueue(int player)
+        {
+            BoatQueue queue;
+            if (player == 1)
+            {
+                queue = queue1;
+            }
+            else
+            {
+                queue = queue2;
+            }
+
+            return queue.getNextBoat().getWidth();
         }
     }
 }

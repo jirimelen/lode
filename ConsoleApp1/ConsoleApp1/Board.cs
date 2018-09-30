@@ -53,11 +53,51 @@ namespace ConsoleApp1
                     if (board[p - 1].Overlay == 1)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
+
+                        foreach (var square in board)
+                        {
+                            if ((board[p - 1].Pos[0] - 1 == square.Pos[0] && board[p - 1].Pos[1] == square.Pos[1] && board[p - 1].Pos[0] - 1 >= 0) || (board[p - 1].Pos[0] + 1 == square.Pos[0] && board[p - 1].Pos[1] == square.Pos[1] && board[p - 1].Pos[0] + 1 <= this.getSize()[0]) || (board[p - 1].Pos[0] == square.Pos[0] && board[p - 1].Pos[1] - 1 == square.Pos[1] && board[p - 1].Pos[1] - 1 >= 0) || (board[p - 1].Pos[0] == square.Pos[0] && board[p - 1].Pos[1] + 1 == square.Pos[1] && board[p - 1].Pos[1] + 1 <= this.getSize()[1]))
+                            {
+                                if (square.state == (int)Square_state.occupied)
+                                {
+                                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                                }
+                            }
+                        }
                     }
                     if (board[p - 1].state == 1 && board[p - 1].Overlay == 1)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                     }
+
+
+
+                    /*foreach (var square in squares)
+                    {
+                        foreach (var boardSquare in boardSquares)
+                        {
+                            if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
+                            {
+                                if (boardSquare.state == 1) err++;
+                            }
+                            if (square.Pos[0] - 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] - 1 >= 0)
+                            {
+                                if (boardSquare.state == 1) err++;
+                            }
+                            if (square.Pos[0] + 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] + 1 <= gameBoard.getSize()[0])
+                            {
+                                if (boardSquare.state == 1) err++;
+                            }
+                            if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] - 1 == boardSquare.Pos[1] && square.Pos[1] - 1 >= 0)
+                            {
+                                if (boardSquare.state == 1) err++;
+                            }
+                            if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] + 1 == boardSquare.Pos[1] && square.Pos[1] + 1 <= gameBoard.getSize()[1])
+                            {
+                                if (boardSquare.state == 1) err++;
+                            }
+                        }
+                    }*/
                 }
                 else
                 {
@@ -89,6 +129,11 @@ namespace ConsoleApp1
         public void printAttackBoard(Board ownBoard)
         {
 
+        }
+
+        public List<int> getSize()
+        {
+            return new List<int>() { ver, hor };
         }
 
         public bool checkWin()

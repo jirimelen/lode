@@ -14,11 +14,10 @@ namespace ConsoleApp1
 		private int rotated = 0;
 
 		protected int width;
-		protected int height = 2;
+		protected int height = 3;
 
 		public Boat()
 		{
-            
 			//if space between(even on first and last square in layer) squares in layer then counter += numOfSpaces 
 		}
 		
@@ -73,6 +72,22 @@ namespace ConsoleApp1
                 foreach (var boardSquare in boardSquares)
                 {
                     if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1])
+                    {
+                        if (boardSquare.state == 1) err++;
+                    }
+                    if (square.Pos[0] - 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] - 1 >= 0)
+                    {
+                        if (boardSquare.state == 1) err++;
+                    }
+                    if (square.Pos[0] + 1 == boardSquare.Pos[0] && square.Pos[1] == boardSquare.Pos[1] && square.Pos[0] + 1 <= gameBoard.getSize()[0])
+                    {
+                        if (boardSquare.state == 1) err++;
+                    }
+                    if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] - 1 == boardSquare.Pos[1] && square.Pos[1] - 1 >= 0)
+                    {
+                        if (boardSquare.state == 1) err++;
+                    }
+                    if (square.Pos[0] == boardSquare.Pos[0] && square.Pos[1] + 1 == boardSquare.Pos[1] && square.Pos[1] + 1 <= gameBoard.getSize()[1])
                     {
                         if (boardSquare.state == 1) err++;
                     }
@@ -183,47 +198,50 @@ namespace ConsoleApp1
 
 			foreach (var square in squares)
             {
-                //not complete... brakes after full rotation
                 layer = square.BoatPos[0];
                 counter = square.BoatPos[1];
-                counterX = -layer + counter;
+                counterX = -layer - counter;
                 counterY = -layer + counter;
-
-                /*Console.WriteLine("counterX: " + counterX);
-                Console.WriteLine("counterY: " + counterY);
-                Console.WriteLine("counter: " + counter);
-                Console.WriteLine("layer: " + layer);
-                Console.WriteLine("pos X: " + square.Pos[1]);
-                Console.WriteLine("pos Y: " + square.Pos[0]);
-                Console.WriteLine("after:");*/
+                
                 switch (rotated)
 				{
 					case 0:
                         square.Pos[0] += counterY;
-						square.Pos[1] -= counterX;
+						square.Pos[1] += counterX;
                         break;
                     case 1:
-                        //if (layer != 0 && counter == 0) counterX *= 2;
-                        square.Pos[0] -= counterY;
-                        square.Pos[1] -= counterX;
+                        if (layer == 0)
+                        {
+                            square.Pos[0] -= counterY;
+                            square.Pos[1] += counterX;
+                        }
+                        else
+                        {
+                            square.Pos[0] += counterX;
+                            square.Pos[1] -= counterY;
+                        }
                         break;
                     case 2:
                         square.Pos[0] -= counterY;
-                        square.Pos[1] += counterX;
+                        square.Pos[1] -= counterX;
                         break;
                     case 3:
-                        square.Pos[0] += counterY;
-                        square.Pos[1] += counterX;
+                        if (layer == 0)
+                        {
+                            square.Pos[0] += counterY;
+                            square.Pos[1] -= counterX;
+                        }
+                        else
+                        {
+                            square.Pos[0] -= counterX;
+                            square.Pos[1] += counterY;
+                        }
                         break;
                 }
                 checkCollision(gameBoard, square);
-                /*Console.WriteLine("pos X: " + square.Pos[1]);
-                Console.WriteLine("pos Y: " + square.Pos[0]);
-                Console.WriteLine();*/
 			}
 			rotated++;
 			if (rotated >= 4) rotated = 0;
-            //Console.WriteLine(rotated);
 			
 			return markBoat(gameBoard);
         }
@@ -259,7 +277,7 @@ namespace ConsoleApp1
 
     class Simple_boat : Boat
     {
-        public Simple_boat(int length/*, List<int> startValues <- when changing boat construct the new one on the same place as current*/)
+        public Simple_boat(int length)
         {
             width = length;
             for (int i = 0; i < length; i++)

@@ -17,8 +17,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            //Console.SetWindowSize(41, 40);
-            //Console.SetBufferSize(41, 40);
+            Console.SetWindowSize(53, 40);
+            Console.SetBufferSize(53, 40);
 
             GameManager manager = new GameManager();
 
@@ -29,10 +29,10 @@ namespace ConsoleApp1
             bool completed = false;
             int winner = 0;
 
-            Board board1 = new Board();
-            Board board2 = new Board();
+            Board board1 = new Board( 13,13 );
+            Board board2 = new Board( 13,13 );
 
-            Boat boat = new Simple_boat(1);
+            Boat boat = new Catamaran_boat(1);
 
 			List<Square> newList = boat.markBoat(board1);
 
@@ -72,71 +72,22 @@ namespace ConsoleApp1
                         if (placed == true)
                         {
                             board1.Boats.Add(boat);
-                            boat = new Simple_boat(1);
+                            if (manager.checkEndQueue(1) == 0)
+                            {
+                                Console.WriteLine("you placed all boats. press any key to continue");
+                                Console.ReadKey();
+                                board1.nextPhase();
+                                activeLoop = false;
+                            }
+                            boat = manager.nextBoat(1);
                             boat.markBoat(board1);
                         }
                         break;
-
-                    case ConsoleKey.Add:
-                    case ConsoleKey.OemPlus:
-                        if (boat.GetType().Name == "Simple_boat")
-                        {
-                            if (boat.getWidth() + 1 <= 5)
-                            {
-                                boat = new Simple_boat(boat.getWidth() + 1);
-                                boat.markBoat(board1);
-                            }
-                        }
-                        break;
-                    case ConsoleKey.Subtract:
-                    case ConsoleKey.OemMinus:
-                        if (boat.GetType().Name.Equals("Simple_boat"))
-                        {
-                            if (boat.getWidth() - 1 > 0)
-                            {
-                                boat = new Simple_boat(boat.getWidth() - 1);
-                                boat.markBoat(board1);
-                            }
-                        }
-                        break;
-
-                    case ConsoleKey.D0:
-                        boat = new Simple_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D1:
-                        boat = new Base_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D2:
-                        boat = new Hydroplane_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D3:
-                        boat = new Cruiser_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D4:
-                        boat = new HeavyCruiser_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D5:
-                        boat = new Catamaran_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D6:
-                        boat = new Warship_boat(1);
-                        boat.markBoat(board1);
-                        break;
-                    case ConsoleKey.D7:
-                        boat = new Planeship_boat(1);
-                        boat.markBoat(board1);
-                        break;
-
+/*
                     case ConsoleKey.Tab:
                         board1.nextPhase();
                         activeLoop = false;
-                        break;
+                        break;*/
                 }
                 board1.printBoard();
                 Console.WriteLine();
@@ -183,71 +134,22 @@ namespace ConsoleApp1
                         if (placed == true)
                         {
                             board2.Boats.Add(boat);
-                            boat = new Simple_boat(1);
+                            if (manager.checkEndQueue(2) == 0)
+                            {
+                                Console.WriteLine("you placed all boats. press any key to continue");
+                                Console.ReadKey();
+                                board2.nextPhase();
+                                activeLoop = false;
+                            }
+                            boat = manager.nextBoat(2);
                             boat.markBoat(board2);
                         }
                         break;
-
-                    case ConsoleKey.Add:
-                    case ConsoleKey.OemPlus:
-                        if (boat.GetType().Name == "Simple_boat")
-                        {
-                            if (boat.getWidth() + 1 <= 5)
-                            {
-                                boat = new Simple_boat(boat.getWidth() + 1);
-                                boat.markBoat(board2);
-                            }
-                        }
-                        break;
-                    case ConsoleKey.Subtract:
-                    case ConsoleKey.OemMinus:
-                        if (boat.GetType().Name.Equals("Simple_boat"))
-                        {
-                            if (boat.getWidth() - 1 > 0)
-                            {
-                                boat = new Simple_boat(boat.getWidth() - 1);
-                                boat.markBoat(board2);
-                            }
-                        }
-                        break;
-
-                    case ConsoleKey.D0:
-                        boat = new Simple_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D1:
-                        boat = new Base_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D2:
-                        boat = new Hydroplane_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D3:
-                        boat = new Cruiser_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D4:
-                        boat = new HeavyCruiser_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D5:
-                        boat = new Catamaran_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D6:
-                        boat = new Warship_boat(1);
-                        boat.markBoat(board2);
-                        break;
-                    case ConsoleKey.D7:
-                        boat = new Planeship_boat(1);
-                        boat.markBoat(board2);
-                        break;
-
+                        /*
                     case ConsoleKey.Tab:
                         board2.nextPhase();
                         activeLoop = false;
-                        break;
+                        break;*/
                 }
                 board2.printBoard();
                 Console.WriteLine();
