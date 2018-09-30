@@ -55,6 +55,7 @@ namespace ConsoleApp1
             }
 
             queue.moveQueue();
+            queue.getQueueBoard().updateBoard(queue.getQueueBoard().getBoard());
             return queue.getCurrentBoat();
         }
 

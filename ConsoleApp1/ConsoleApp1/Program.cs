@@ -72,6 +72,8 @@ namespace ConsoleApp1
                                 activeLoop = false;
                             }
                             boat = manager.nextBoat(1);
+                            Console.Clear();
+                            manager.printInfo(2, 1);
                             boat.markBoat(board1);
                         }
                         break;
@@ -136,6 +138,8 @@ namespace ConsoleApp1
                             }
                             boat = manager.nextBoat(2);
                             boat.markBoat(board2);
+                            Console.Clear();
+                            manager.printInfo(2, 1);
                         }
                         break;
 
