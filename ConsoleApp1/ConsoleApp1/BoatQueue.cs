@@ -28,7 +28,7 @@ namespace ConsoleApp1
         public Board getQueueBoard()
         {
             Board queueBoard = new Board(3,5);
-            //queueBoard.updateBoard(queue[position].markBoat(queueBoard));
+            if (position < queue.Count()) queueBoard.updateBoard(queue[position].markBoat(queueBoard));
 
             return queueBoard;
         }
